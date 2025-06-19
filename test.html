@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World Web Component Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .container {
+            text-align: center;
+            color: white;
+        }
+        button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background: #f39c12;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #e67e22;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Web Component Test</h1>
+        <hello-world></hello-world>
+        <br>
+        <button onclick="updateName()">Update with Random Animal</button>
+    </div>
+
+    <script type="module">
+        // Import the web component
+        import './components/HelloWorld.js';
+        
+        // List of animals
+        const animals = [
+            'Elephant', 'Giraffe', 'Penguin', 'Dolphin', 'Kangaroo', 
+            'Panda', 'Tiger', 'Lion', 'Zebra', 'Gorilla',
+            'Octopus', 'Butterfly', 'Eagle', 'Shark', 'Koala',
+            'Polar Bear', 'Wolf', 'Fox', 'Deer', 'Rabbit'
+        ];
+
+        // Function to update the name
+        window.updateName = function() {
+            const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+            
+            const event = new CustomEvent('update-hello-world', {
+                detail: { name: randomAnimal }
+            });
+            
+            window.dispatchEvent(event);
+        };
+
+        // Update on page load
+        setTimeout(() => {
+            window.updateName();
+        }, 100);
+    </script>
+</body>
+</html> 
