@@ -9,7 +9,7 @@ This project demonstrates how to create a Lit web component that integrates with
 - **Event Communication**: Custom events for communication between Next.js and the web component
 - **Storybook**: Complete Storybook setup for component development and testing
 - **Tailwind CSS**: Modern styling with Tailwind CSS
-- **TypeScript**: Full TypeScript support
+- **JavaScript**: Clean JavaScript implementation avoiding Babel decorator issues
 
 ## Project Structure
 
@@ -21,17 +21,18 @@ This project demonstrates how to create a Lit web component that integrates with
 │   ├── layout.tsx                  # Root layout
 │   └── page.tsx                    # Main page
 ├── components/
-│   └── HelloWorld.ts               # Lit web component
+│   └── HelloWorld.js               # Lit web component (JavaScript)
 ├── stories/
 │   └── HelloWorld.stories.ts       # Storybook stories
 ├── .storybook/
 │   ├── main.ts                     # Storybook configuration
-│   └── preview.ts                  # Storybook preview settings
+│   ├── preview.ts                  # Storybook preview settings
+│   └── test-runner.ts              # Storybook test runner
 ├── package.json                    # Dependencies and scripts
 ├── tailwind.config.js             # Tailwind CSS configuration
 ├── postcss.config.js              # PostCSS configuration
 ├── next.config.js                 # Next.js configuration
-└── tsconfig.json                  # TypeScript configuration
+└── tsconfig.json                  # TypeScript configuration (for Next.js)
 ```
 
 ## How It Works
@@ -77,7 +78,7 @@ npm start
 
 - **Lit**: Web component framework
 - **Next.js**: React framework for production
-- **TypeScript**: Type-safe JavaScript
+- **JavaScript**: Clean implementation avoiding TypeScript decorator issues
 - **Tailwind CSS**: Utility-first CSS framework
 - **Storybook**: Component development environment
 
@@ -101,7 +102,13 @@ window.dispatchEvent(event);
 
 You can easily customize the web component by:
 
-1. Modifying the styles in `components/HelloWorld.ts`
+1. Modifying the styles in `components/HelloWorld.js`
 2. Adding new properties to the component
 3. Creating new stories in `stories/HelloWorld.stories.ts`
-4. Changing the animal list in `app/components/HelloWorldLoader.tsx` 
+4. Changing the animal list in `app/components/HelloWorldLoader.tsx`
+
+## Technical Notes
+
+- The Lit component is written in JavaScript to avoid Babel decorator configuration issues
+- Storybook is configured to work seamlessly with the JavaScript component
+- The project maintains TypeScript support for Next.js components while using JavaScript for the Lit component 
