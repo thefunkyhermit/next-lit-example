@@ -1,55 +1,38 @@
 import type { Meta, StoryObj } from '@storybook/react';
-import { useEffect, useRef } from 'react';
 import React from 'react';
 
-// Import the TypeScript version of the component
-import '../components/HelloWorld';
+// Import the JavaScript version of the component
+import '../components/HelloWorld.js';
 
-// React wrapper component for the web component
-const HelloWorldWrapper = ({ name }: { name?: string }) => {
-  const elementRef = useRef<any>(null);
-
-  useEffect(() => {
-    if (elementRef.current && name) {
-      elementRef.current.setAttribute('name', name);
-    }
-  }, [name]);
-
-  return React.createElement('hello-world', { ref: elementRef });
-};
-
-const meta: Meta<typeof HelloWorldWrapper> = {
+// Simple story that directly renders the web component
+const meta: Meta = {
   title: 'Components/HelloWorld',
-  component: HelloWorldWrapper,
   parameters: {
     layout: 'centered',
   },
   tags: ['autodocs'],
-  argTypes: {
-    name: {
-      control: 'text',
-      description: 'The name to display in the greeting',
-    },
-  },
 };
 
 export default meta;
-type Story = StoryObj<typeof meta>;
+type Story = StoryObj;
 
 export const Default: Story = {
-  args: {
-    name: 'World',
+  render: () => {
+    return React.createElement('div', {}, 
+      React.createElement('hello-world', { name: 'World' })
+    );
   },
 };
 
 export const WithCustomName: Story = {
-  args: {
-    name: 'Lit Framework',
+  render: () => {
+    return React.createElement('div', {}, 
+      React.createElement('hello-world', { name: 'Lit Framework' })
+    );
   },
 };
 
 export const WithRandomAnimal: Story = {
-  args: {},
   render: () => {
     const animals = [
       'Elephant', 'Giraffe', 'Penguin', 'Dolphin', 'Kangaroo', 
@@ -57,6 +40,8 @@ export const WithRandomAnimal: Story = {
     ];
     const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
     
-    return React.createElement(HelloWorldWrapper, { name: randomAnimal });
+    return React.createElement('div', {}, 
+      React.createElement('hello-world', { name: randomAnimal })
+    );
   },
 }; 

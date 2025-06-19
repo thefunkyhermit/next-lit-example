@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HelloWorld Component Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .test-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        button {
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>HelloWorld Component Test</h1>
+        
+        <h2>Default Component:</h2>
+        <hello-world></hello-world>
+        
+        <h2>Component with Custom Name:</h2>
+        <hello-world name="TypeScript"></hello-world>
+        
+        <h2>Test Event Dispatch:</h2>
+        <button onclick="dispatchRandomAnimal()">Dispatch Random Animal Event</button>
+        <button onclick="dispatchCustomName()">Dispatch Custom Name Event</button>
+        
+        <div id="event-log">
+            <h3>Event Log:</h3>
+            <div id="log-content"></div>
+        </div>
+    </div>
+
+    <script type="module">
+        import './components/HelloWorld.ts';
+        
+        // Listen for the update event
+        window.addEventListener('update-hello-world', (event) => {
+            console.log('Event received:', event.detail);
+            const logContent = document.getElementById('log-content');
+            logContent.innerHTML += `<p>Event received: ${JSON.stringify(event.detail)}</p>`;
+        });
+        
+        // Test functions
+        window.dispatchRandomAnimal = function() {
+            const animals = ['Elephant', 'Giraffe', 'Penguin', 'Dolphin', 'Kangaroo'];
+            const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
+            const event = new CustomEvent('update-hello-world', {
+                detail: { name: randomAnimal }
+            });
+            window.dispatchEvent(event);
+        };
+        
+        window.dispatchCustomName = function() {
+            const event = new CustomEvent('update-hello-world', {
+                detail: { name: 'Custom Name from Button' }
+            });
+            window.dispatchEvent(event);
+        };
+    </script>
+</body>
+</html> 

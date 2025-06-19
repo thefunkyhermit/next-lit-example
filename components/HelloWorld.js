@@ -1,10 +1,14 @@
 import { LitElement, html, css } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
 
-@customElement('hello-world')
 export class HelloWorld extends LitElement {
-  @property({ type: String })
-  name = 'World';
+  static properties = {
+    name: { type: String }
+  };
+
+  constructor() {
+    super();
+    this.name = 'World';
+  }
 
   static styles = css`
     :host {
@@ -43,19 +47,18 @@ export class HelloWorld extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     // Listen for the update-hello-world event
-    window.addEventListener('update-hello-world', this.handleUpdateEvent.bind(this) as EventListener);
+    window.addEventListener('update-hello-world', this.handleUpdateEvent.bind(this));
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     // Clean up event listener
-    window.removeEventListener('update-hello-world', this.handleUpdateEvent.bind(this) as EventListener);
+    window.removeEventListener('update-hello-world', this.handleUpdateEvent.bind(this));
   }
 
-  private handleUpdateEvent(event: Event) {
-    const customEvent = event as CustomEvent;
-    if (customEvent.detail && customEvent.detail.name) {
-      this.name = customEvent.detail.name;
+  handleUpdateEvent(event) {
+    if (event.detail && event.detail.name) {
+      this.name = event.detail.name;
     }
   }
 
@@ -68,8 +71,4 @@ export class HelloWorld extends LitElement {
   }
 }
 
-declare global {
-  interface HTMLElementTagNameMap {
-    'hello-world': HelloWorld;
-  }
-} 
+customElements.define('hello-world', HelloWorld); 

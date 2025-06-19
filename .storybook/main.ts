@@ -15,14 +15,6 @@ const config = {
   docs: {
     autodocs: "tag",
   },
-  babel: async (options) => {
-    options.plugins = [
-      ...(options.plugins || []),
-      ['@babel/plugin-proposal-decorators', { legacy: true }],
-      ['@babel/plugin-proposal-class-properties', { loose: true }]
-    ];
-    return options;
-  },
 };
 
 export default config; 
